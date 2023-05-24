@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="script.js"></script>
+
+    <title>VR tictactoe</title>
+  </head>
+  <body>
+    <a-scene cursor="rayOrigin: mouse">
+      <a-sky color="#000000"></a-sky>
+
+      <a-entity
+        geometry="primitive: box"
+        material="color: #14457F"
+        scale="0.8 12 0.4"
+        position="-6 0 -11.9"
+      ></a-entity>
+      <a-entity
+        geometry="primitive: box"
+        material="color: #14457F"
+        scale="0.8 12 0.4"
+        position="6 0 -11.9"
+      ></a-entity>
+      <a-entity
+        geometry="primitive: box"
+        material="color: #14457F"
+        scale="0.8 12 0.4"
+        position="2 0 -11.9"
+      ></a-entity>
+      <a-entity
+        geometry="primitive: box"
+        material="color: #14457F"
+        scale="0.8 12 0.4"
+        position="-2 0 -11.9"
+      ></a-entity>
+      <a-entity
+        geometry="primitive: box"
+        material="color: #14457F"
+        scale="12.8 0.8 0.4"
+        position="0 6 -11.9"
+      ></a-entity>
+      <a-entity
+        geometry="primitive: box"
+        material="color: #14457F"
+        scale="12.8 0.8 0.4"
+        position="0 -6 -11.9"
+      ></a-entity>
+      <a-entity
+        geometry="primitive: box"
+        material="color: #14457F"
+        scale="12 0.8 0.4"
+        position="0 2 -11.9"
+      ></a-entity>
+      <a-entity
+        geometry="primitive: box"
+        material="color: #14457F"
+        scale="12 0.8 0.4"
+        position="0 -2 -11.9"
+      ></a-entity>
+      <a-entity
+        geometry="primitive: box"
+        material="color: #14457F"
+        scale="12 0.8 0.4"
+        position="0 -2 -11.9"
+      ></a-entity>
+
+      <a-entity
+        class="slot"
+        id="0"
+        slot-click
+        geometry="primitive: box"
+        material="color: #0C6EA9"
+        scale="3.2 3.2 0.4s"
+        position="-4 4 -11.9"
+      ></a-entity>
+      <a-entity
+        class="slot"
+        id="1"
+        slot-click
+        geometry="primitive: box"
+        material="color: #0C6EA9"
+        scale="3.2 3.2 0.4"
+        position="0 4 -11.9"
+      ></a-entity>
+      <a-entity
+        class="slot"
+        id="2"
+        slot-click
+        geometry="primitive: box"
+        material="color: #0C6EA9"
+        scale="3.2 3.2 0.4"
+        position="4 4 -11.9"
+      ></a-entity>
+      <a-entity
+        class="slot"
+        id="4"
+        slot-click
+        geometry="primitive: box"
+        material="color: #0C6EA9"
+        scale="3.2 3.2 0.4"
+        position="0 0 -11.9"
+      ></a-entity>
+      <a-entity
+        class="slot"
+        id="3"
+        slot-click
+        geometry="primitive: box"
+        material="color: #0C6EA9"
+        scale="3.2 3.2 0.4"
+        position="-4 0 -11.9"
+      ></a-entity>
+      <a-entity
+        class="slot"
+        id="5"
+        slot-click
+        geometry="primitive: box"
+        material="color: #0C6EA9"
+        scale="3.2 3.2 0.4"
+        position="4 0 -11.9"
+      ></a-entity>
+      <a-entity
+        class="slot"
+        id="6"
+        slot-click
+        geometry="primitive: box"
+        material="color: #0C6EA9"
+        scale="3.2 3.2 0.4"
+        position="-4 -4 -11.9"
+      ></a-entity>
+      <a-entity
+        class="slot"
+        id="7"
+        slot-click
+        geometry="primitive: box"
+        material="color: #0C6EA9"
+        scale="3.2 3.2 0.4"
+        position="0 -4 -11.9"
+      ></a-entity>
+      <a-entity
+        class="slot"
+        id="8"
+        slot-click
+        geometry="primitive: box"
+        material="color: #0C6EA9"
+        scale="3.2 3.2 0.4"
+        position="4 -4 -11.9"
+      ></a-entity>
+    </a-scene>
+
+    <section></section>
+  </body>
+</html>
