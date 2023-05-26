@@ -2,6 +2,7 @@ let playerPlayedSlots = [];
 let enemyPlayedSlots = [];
 let allPlayedSlots = [];
 let allowClick = true;
+let gameOver = false; // New variable to track game over state
 
 AFRAME.registerComponent("slot-click", {
   schema: {},
@@ -22,34 +23,35 @@ AFRAME.registerComponent("slot-click", {
     const slotArr = Array.from(document.querySelectorAll(".slot"));
     const slots = document.querySelectorAll(".slot");
 
+    // player mark
     const X = () => {
       let lineA = document.createElement("a-entity");
       lineA.setAttribute("geometry", "primitive: box");
-      lineA.setAttribute("position", "0 0 -0.2");
-      lineA.setAttribute("material", "color: #00F6FB");
+      lineA.setAttribute("position", "0 0 -0.11");
+      lineA.setAttribute("material", "color: #55defa");
       lineA.setAttribute("rotation", "0 0 45 ");
       lineA.setAttribute("scale", "0.8 0.12 0.8");
       let lineB = document.createElement("a-entity");
       lineB.setAttribute("geometry", "primitive: box");
-      lineB.setAttribute("position", "0 0 -0.2");
-      lineB.setAttribute("material", "color: #00F6FB");
+      lineB.setAttribute("position", "0 0 -0.11");
+      lineB.setAttribute("material", "color: #55defa");
       lineB.setAttribute("rotation", "0 0 -45");
       lineB.setAttribute("scale", "0.8 0.12 0.8");
       return [lineA, lineB];
     };
 
+    // enemy mark
     const O = () => {
       let ring = document.createElement("a-entity");
       ring.setAttribute("geometry", "primitive: ring");
-      ring.setAttribute("position", "0 0 -0.8");
-      ring.setAttribute("material", "color: #FF0087");
+      ring.setAttribute("position", "0 0 -0.51");
+      ring.setAttribute("material", "color: #b845f3");
       ring.setAttribute("rotation", "0 180 0");
       ring.setAttribute("scale", ".3 .3");
       return ring;
     };
 
     const winCheck = (playedSlots) => {
-      console.log("playerPlayedSlots " + playerPlayedSlots);
       const isWinningCombination = WINNINGCOMBINATIONS.some((combination) => {
         return combination.every((index) => {
           return playedSlots.includes(index.toString());
@@ -57,6 +59,24 @@ AFRAME.registerComponent("slot-click", {
       });
 
       return isWinningCombination;
+    };
+
+    const findWinningSlots = (playedSlots) => {
+      const winningSlots = [];
+
+      WINNINGCOMBINATIONS.forEach((combination) => {
+        const isWinningCombination = combination.every((index) => {
+          return playedSlots.includes(index.toString());
+        });
+
+        if (isWinningCombination) {
+          combination.forEach((index) => {
+            winningSlots.push(slotArr[index]);
+          });
+        }
+      });
+
+      return winningSlots;
     };
 
     function rnd(max) {
@@ -71,6 +91,7 @@ AFRAME.registerComponent("slot-click", {
         this.enemyTurn();
       } else {
         allPlayedSlots.push(enemyMove.toString());
+        enemyPlayedSlots.push(enemyMove.toString());
         let enemySlots = document.querySelectorAll(".slot");
 
         enemySlots[enemyMove].append(O());
@@ -78,18 +99,36 @@ AFRAME.registerComponent("slot-click", {
           "animation",
           "property: rotation; to: 0, 180, 0"
         );
-        enemySlots[enemyMove].setAttribute("material", "color: #0C6EA9");
+        enemySlots[enemyMove].setAttribute("material", "color: #283173");
+
+        const isEnemyWinning = winCheck(enemyPlayedSlots);
+
+        if (isEnemyWinning) {
+          console.log("Enemy wins!");
+          allowClick = false;
+          gameOver = true; // Set gameOver to true
+          const winningSlots = findWinningSlots(enemyPlayedSlots);
+          const winningCombination = winningSlots.map((slot) => slot.id);
+          console.log("Winning Combination:", winningCombination);
+
+          // coloring the winning slots
+          winningCombination.forEach((e) => {
+            slots[e].setAttribute("material", "color: #b845f3");
+            slots[e].firstChild.setAttribute("material", "color: #283173");
+          });
+        }
       }
     };
 
     this.triggerSlot = () => {
-      if (allowClick) {
+      if (allowClick && !gameOver) {
+        // Check both allowClick and gameOver
         allowClick = false;
 
         // draw the X and turn the slot
         el.append(...X());
         el.setAttribute("animation", "property: rotation; to: 0, 180, 0");
-        el.setAttribute("material", "color: #0C6EA9");
+        el.setAttribute("material", "color: #283173");
 
         playerPlayedSlots.push(el.id);
         allPlayedSlots.push(el.id);
@@ -99,13 +138,26 @@ AFRAME.registerComponent("slot-click", {
         if (isPlayerWinning) {
           console.log("Player wins!");
           allowClick = false;
+          gameOver = true; // Set gameOver to true
+          const winningSlots = findWinningSlots(playerPlayedSlots);
+          const winningCombination = winningSlots.map((slot) => slot.id);
+          console.log("Winning Combination:", winningCombination);
+
+          // coloring the winning slots
+          winningCombination.forEach((e) => {
+            const children = Array.from(slots[e].children);
+            slots[e].setAttribute("material", "color: #55defa");
+            children.forEach((child) => {
+              child.setAttribute("material", "color: #283173");
+            });
+          });
         } else {
           setTimeout(() => {
             this.enemyTurn();
             allowClick = true;
           }, 1500);
         }
-      } // triggerSlot
+      }
     };
 
     this.el.addEventListener("click", this.triggerSlot);
