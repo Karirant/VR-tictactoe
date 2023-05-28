@@ -4,6 +4,10 @@ let allPlayedSlots = [];
 let allowClick = true;
 let gameOver = false; // New variable to track game over state
 
+const $ = _ => document.querySelector(_)
+const $a = _ => document.querySelectorAll(_)
+const $c = _ => document.createElement(_)
+
 AFRAME.registerComponent("slot-click", {
   schema: {},
   init: function () {
@@ -20,12 +24,12 @@ AFRAME.registerComponent("slot-click", {
       [2, 4, 6],
     ];
 
-    const slotArr = Array.from(document.querySelectorAll(".slot"));
-    const slots = document.querySelectorAll(".slot");
+    const slotArr = Array.from($a(".slot"));
+    const slots = $a(".slot");
 
     // player mark
     const X = () => {
-      let lineA = document.createElement("a-entity");
+      let lineA = $c("a-entity");
       lineA.setAttribute("geometry", "primitive: box");
       lineA.setAttribute("position", "0 0 -0.11");
       lineA.setAttribute("material", "color: #55defa");
@@ -92,7 +96,7 @@ AFRAME.registerComponent("slot-click", {
       } else {
         allPlayedSlots.push(enemyMove.toString());
         enemyPlayedSlots.push(enemyMove.toString());
-        let enemySlots = document.querySelectorAll(".slot");
+        let enemySlots = $a(".slot");
 
         enemySlots[enemyMove].append(O());
         enemySlots[enemyMove].setAttribute(
